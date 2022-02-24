@@ -1,0 +1,312 @@
+<template>
+  <!-- Testing this line of code-->
+  <!-- Check script file below under methods and see why the InvoiceId is generating by itself -->
+  <!-- <div>{{ currentInvoice.invoiceId }}</div> -->
+  <div v-if="currentInvoice" class="invoice-view container">
+    <router-link class="nav-link flex" :to="{ name: 'Home' }">
+      <img src="@/assets/icon-arrow-left.svg" alt="" /> Go back Home
+    </router-link>
+
+    <!-- Header Area -->
+    <div class="header flex">
+      <div class="left flex">
+        <span>Status</span>
+        <!-- A class is bind adding a condition either true or false for the price payment -->
+        <div
+          class="status-button flex"
+          :class="{
+            paid: currentInvoice.invoicePaid,
+            draft: currentInvoice.invoiceDraft,
+            pending: currentInvoice.invoicePending,
+          }"
+        >
+          <span v-if="currentInvoice.invoicePaid">Paid</span>
+          <span v-if="currentInvoice.invoiceDraft">Draft</span>
+          <span v-if="currentInvoice.invoicePending">Pending</span>
+        </div>
+      </div>
+
+      <div class="right flex">
+        <!-- Button 1 -->
+        <!-- I pass a parameter of currentInvoice inside toggleEditInvoice -->
+        <button
+          @click="toggleEditInvoice(currentInvoice.docId)"
+          class="dark-blue"
+        >
+          Edit
+        </button>
+
+        <!-- Button 2 -->
+        <button @click="deleteInvoice(currentInvoice.docId)" class="red">
+          Delete
+        </button>
+
+        <!-- Button 3 -->
+        <!-- This button is where you can mark it as paid or pending -->
+        <button
+          v-if="currentInvoice.invoicePending"
+          @click="updateStatusToPaid(currentInvoice.docId)"
+          class="green"
+        >
+          Mark as Paid
+        </button>
+
+        <!-- Button 4 -->
+        <button
+          v-if="currentInvoice.invoiceDraft || currentInvoice.invoicePaid"
+          @click="updateStatusToPending(currentInvoice.docId)"
+          class="pink"
+        >
+          Mark as Pending
+        </button>
+      </div>
+    </div>
+
+    <!-- Invoice Details area -->
+    <div class="invoice-details flex flex-column">
+      <div class="top flex">
+        <!-- div left -->
+        <!-- All this info here is coming form the Firebase Database -->
+        <div class="left flex flex-column">
+          <p><span>#</span>{{ currentInvoice.invoiceId }}</p>
+          <p>{{ currentInvoice.productDescription }}</p>
+        </div>
+        <!-- div right -->
+        <!-- All this info here is coming form the Firebase Database -->
+        <div class="right flex flex-column">
+          <p>{{ currentInvoice.billerStreetAddress }}</p>
+          <p>{{ currentInvoice.billerCity }}</p>
+          <p>{{ currentInvoice.billerZipCode }}</p>
+          <p>{{ currentInvoice.billerCountry }}</p>
+        </div>
+      </div>
+
+      <div class="middle flex">
+        <!-- Mock up for payment is here -->
+        <div class="payment flex flex-column">
+          <h4>Invoice Date</h4>
+          <p>{{ currentInvoice.invoiceDate }}</p>
+          <h4>Payment Date</h4>
+          <p>{{ currentInvoice.paymentDueDate }}</p>
+        </div>
+
+        <!-- Mock up for bill is here -->
+        <div class="bill flex flex-column">
+          <h4>Bill To</h4>
+          <p>{{ currentInvoice.customerName }}</p>
+          <p>{{ currentInvoice.customerStreetAddress }}</p>
+          <p>{{ currentInvoice.customerCity }}</p>
+          <p>{{ currentInvoice.customerCode }}</p>
+          <p>{{ currentInvoice.customerCountry }}</p>
+        </div>
+
+        <!-- Send-to is the customer Email and here is the area -->
+        <div class="send-to flex flex-column">
+          <h4>Send To</h4>
+          <p>{{ currentInvoice.customerEmail }}</p>
+        </div>
+      </div>
+
+      <div class="bottom flex flex-column">
+        <div class="billing-items">
+          <div class="heading flex">
+            <p>Item Name</p>
+            <p>QTY</p>
+            <p>Price</p>
+            <p>Total</p>
+          </div>
+          <!-- iterating through the item using v-for loop -->
+          <div
+            v-for="(item, index) in currentInvoice.invoiceItemList"
+            :key="index"
+            class="item flex"
+          >
+            <p>{{ item.itemName }}</p>
+            <p>{{ item.qty }}</p>
+            <p>{{ item.price }}</p>
+            <p>{{ item.total }}</p>
+          </div>
+        </div>
+
+        <div class="total flex">
+          <p>Amount Due</p>
+          <p>{{ currentInvoice.invoiceTotal }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapMutations, mapState } from "vuex";
+export default {
+  name: "invoiceView",
+  data() {
+    return {
+      currentInvoice: null,
+    };
+  },
+  created() {
+    this.getCurrentInvoice();
+  },
+  methods: {
+    ...mapMutations(["SET_CURRENT_INVOICE"]),
+
+    getCurrentInvoice() {
+      // passing the params invoiceId from router to get the unique Id
+      this.SET_CURRENT_INVOICE(this.$route.params.invoiceId);
+      // this line of code is helping in generating the unique InvoiceId on this InvoiceView.vue file here
+      this.currentInvoice = this.currentInvoiceArray[0];
+    },
+  },
+  computed: {
+    ...mapState(["currentInvoiceArray"]),
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.invoice-view {
+  .nav-link {
+    // display: flex is already call in the class declaration that is coming from app.vue style scss
+    margin-bottom: 32px;
+    align-items: center;
+    color: #fff;
+    font-size: 13px;
+    img {
+      margin-right: 16px;
+      width: 7px;
+      height: 10px;
+    }
+  }
+
+  // Targeted The header and invoice-details area at once
+  .header,
+  .invoice-details {
+    background-color: #0e203d;
+    border-radius: 10px;
+  }
+
+  .header {
+    align-items: center;
+    padding: 24px 32px;
+    font-size: 13px;
+
+    .left {
+      align-items: center;
+
+      span {
+        color: #dfe3fa;
+        margin-right: 16px;
+      }
+    }
+
+    // This where the buttons is on right hand side
+    .right {
+      flex: 1;
+      justify-content: flex-end;
+
+      .button {
+        color: #fff;
+      }
+    }
+  }
+
+  .invoice-details {
+    padding: 48px;
+    margin-top: 24px;
+
+    .top {
+      //inside the top, we have left and right div.. So I simply represent with one div
+      // to target the two div
+      div {
+        color: #dfe3fa;
+        flex: 1;
+      }
+
+      .left {
+        font-size: 14px;
+        // Targeted first paragraph
+        p:first-child {
+          font-size: 24px;
+          //the text will transform to Capital letter
+          text-transform: uppercase;
+          color: #fff;
+          margin-bottom: 8px;
+        }
+
+        // Targeted Second paragraph
+        p:nth-child(2) {
+          font-size: 16px;
+        }
+
+        // span for #
+        span {
+          color: #888eb0;
+        }
+      }
+
+      .right {
+        font-size: 14px;
+        align-items: flex-end;
+      }
+    }
+
+    .middle {
+      margin-top: 50px;
+      color: #dfe3fa;
+      gap: 16px;
+
+      h4 {
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 12px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+      .bill,
+      .payment {
+        flex: 1;
+      }
+
+      .payment {
+        h4:nth-child(3) {
+          margin-top: 32px;
+        }
+        p {
+          font-weight: 600;
+        }
+      }
+      .bill {
+        p:nth-child(2) {
+          font-size: 16px;
+        }
+        p:nth-child(3) {
+          margin-top: auto;
+        }
+
+        p {
+          font-size: 13px;
+          max-width: 200px;
+        }
+      }
+
+      .send-to {
+        flex: 2;
+      }
+    }
+
+    .bottom {
+      margin-top: 50px;
+      .billing-items {
+        padding: 32px;
+        // border-radius: 20px 20px 10px 10px;
+        border-radius: 10px;
+        background-color: #00b5dd;
+      }
+    }
+  }
+}
+</style>
