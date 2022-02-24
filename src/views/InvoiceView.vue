@@ -305,7 +305,7 @@ export default {
         padding: 32px;
         // border-radius: 20px 20px 10px 10px;
         border-radius: 10px;
-        background-color: #00b5dd;
+        background-color: #13294e;
 
         .heading {
           color: #dfe3fa;
@@ -348,7 +348,8 @@ export default {
       .total {
         color: #fff;
         padding: 32px;
-        background-color: rgba(12, 14, 24, 0.7);
+        margin-top: 25px;
+        background-color: rgba(12, 14, 23, 0.7);
         align-items: center;
         border-radius: 0 0 20px 20px;
 

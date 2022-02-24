@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="header flex">
       <div class="left flex flex-column">
-        <h1>Customer Invoices</h1>
+        <h1>Invoices</h1>
         <span>There are 4 total invoices</span>
       </div>
 
@@ -44,12 +44,13 @@
       />
     </div>
     <!-- Output this condition in the new div here -->
-    <div v-else class="empty flex flex-column">
-      <img src="@/assets/illustration-empty.svg" alt="" />
-      <h3>There is nothing inside here!</h3>
+    <div v-else class="oops flex flex-column">
+      <img src="@/assets/illustration-opps.svg" alt="" />
+      <h1>oops!</h1>
+      <h3>There no invoices here!</h3>
       <p>
         Create a new invoice by clicking the New Invoice button and get started
-        with this Web App.
+        with this Appliaction.
       </p>
     </div>
   </div>
@@ -180,7 +181,7 @@ export default {
     }
   }
 
-  .empty {
+  .oops {
     margin-top: 160px;
     align-items: center;
 
@@ -189,9 +190,15 @@ export default {
       height: 200px;
     }
 
+    h1 {
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
     h3 {
       font-size: 20px;
-      margin-top: 40px;
+      margin-top: 20px;
+      text-transform: uppercase;
     }
     p {
       text-align: center;
