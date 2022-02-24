@@ -300,11 +300,67 @@ export default {
 
     .bottom {
       margin-top: 50px;
+
       .billing-items {
         padding: 32px;
         // border-radius: 20px 20px 10px 10px;
         border-radius: 10px;
         background-color: #00b5dd;
+
+        .heading {
+          color: #dfe3fa;
+          font-size: 13px;
+          font-weight: 400;
+          margin-bottom: 32px;
+
+          p:first-child {
+            flex: 3;
+            text-align: left;
+          }
+
+          p {
+            flex: 1;
+            text-align: right;
+          }
+        }
+
+        .item {
+          margin-bottom: 32px;
+          font-size: 14px;
+          color: #fff;
+
+          &:last-child {
+            //I input 0 because I don't want the las item to have a margin-bottom of 32px
+            margin-bottom: 0;
+          }
+
+          p:first-child {
+            flex: 3;
+            text-align: left;
+          }
+          p {
+            flex: 1;
+            text-align: right;
+          }
+        }
+      }
+
+      .total {
+        color: #fff;
+        padding: 32px;
+        background-color: rgba(12, 14, 24, 0.7);
+        align-items: center;
+        border-radius: 0 0 20px 20px;
+
+        p {
+          flex: 1;
+          font-size: 13px;
+        }
+        // nth-child(2) is focusing on the right hand
+        p:nth-child(2) {
+          font-size: 28px;
+          text-align: right;
+        }
       }
     }
   }
