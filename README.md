@@ -85,7 +85,7 @@ went down to methods: {} and create functionality for this below
 //this checkClick is determining when a user click outside anyway on the browser then Toggle left will disappear
 
 
-# This optional --- You can connect to MySQL database instead of firebase
+# This optional --- You can connect to MySQL database applying NodeJs with it, instead of Firebase
 
 ### Connecting to the backend (Database) using this command line
 
