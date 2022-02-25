@@ -29,12 +29,8 @@
       <div class="right flex">
         <!-- Button 1 -->
         <!-- I pass a parameter of currentInvoice inside toggleEditInvoice -->
-        <button
-          @click="toggleEditInvoice(currentInvoice.docId)"
-          class="dark-blue"
-        >
-          Edit
-        </button>
+        <!--I remove (currentInvoice.docId)from toggleEditInvoice because I don't need it again -->
+        <button @click="toggleEditInvoice" class="dark-blue">Edit</button>
 
         <!-- Button 2 -->
         <button @click="deleteInvoice(currentInvoice.docId)" class="red">

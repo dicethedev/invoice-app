@@ -9,6 +9,8 @@ export default createStore({
     invoicesLoaded: null,
     //This is apply in invoiceView.vue file
     currentInvoiceArray: null,
+      //This editInvoice is active in the invoiceView in Views Folder
+    editInvoice: null,
   },
   mutations: {
     //the toggle-invoice i pass the state inside the function
@@ -37,6 +39,9 @@ export default createStore({
       });
      }
   },
+     TOGGLE_EDIT_INVOICE(state){
+       state.editInvoice = !state.editInvoice;
+     },
   actions: {
     //to retrieve the data from firebase
     // I commit in here and state value // pass async to await the data from the firebase
