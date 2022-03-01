@@ -322,12 +322,45 @@ export default {
 
   created() {
     // get current date for invoice date field here
+    if (!this.editInvoice) {
+      this.invoiceDateUnix = Date.now();
+      this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString(
+        "en-uk",
+        this.dateOptions
+      );
+      // I went back downward inside computed to mapState a function called 'currentInvoiceArray'
+    }
     //Invoice Date Generator
-    this.invoiceDateUnix = Date.now();
-    this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString(
-      "en-uk",
-      this.dateOptions
-    );
+    // this.invoiceDateUnix = Date.now();
+    // this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString(
+    //   "en-uk",
+    //   this.dateOptions
+    // );
+    if (this.editInvoice) {
+      const currentInvoice = this.currentInvoiceArray[0];
+      this.docId = currentInvoice.docId;
+      this.billerStreetAddress = currentInvoice.billerStreetAddress;
+      this.billerCity = currentInvoice.billerCity;
+      this.billerZipCode = currentInvoice.billerZipCode;
+      this.billerCountry = currentInvoice.billerCountry;
+      this.customerName = currentInvoice.customerName;
+      this.customerEmail = currentInvoice.customerEmail;
+      this.customerStreetAddress = currentInvoice.customerStreetAddress;
+      this.customerCity = currentInvoice.customerCity;
+      this.customerZipCode = currentInvoice.customerZipCode;
+      this.customerCountry = currentInvoice.customerCountry;
+      this.invoiceDateUnix = currentInvoice.invoiceDateUnix;
+      this.invoiceDate = currentInvoice.invoiceDate;
+      this.invoicePending = currentInvoice.invoicePending;
+      this.invoiceDraft = currentInvoice.invoiceDraft;
+      this.invoiceItemList = currentInvoice.invoiceItemList;
+      this.paymentDueDate = currentInvoice.paymentDueDate;
+      this.paymentDueDateUnix = currentInvoice.paymentDueDateUnix;
+      this.paymentTerms = currentInvoice.paymentTerms;
+      this.productDescription = currentInvoice.productDescription;
+      this.invoiceTotal = currentInvoice.invoiceTotal;
+    }
+    // I head back to index.js in the store collection to create a new mutation
   },
 
   methods: {
@@ -348,6 +381,7 @@ export default {
       if (this.editInvoice) {
         this.TOGGLE_EDIT_INVOICE();
       }
+      //head back upward into created() life cycle hook to add 'if' condition to it by adding editInvoice
     },
 
     addNewInvoiceItem() {
@@ -442,7 +476,8 @@ export default {
   },
   //mapState here is controlling the toggleEditButton on the InvoiceView
   computed: {
-    ...mapState(["editInvoice"]),
+    ...mapState(["editInvoice", "currentInvoiceArray"]),
+    // I went back to created() life cycle hook to run another if check
   },
   // calculating the payment terms below in watch: {}
   watch: {
