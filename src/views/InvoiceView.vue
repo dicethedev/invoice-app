@@ -154,6 +154,13 @@ export default {
       // this line of code is helping in generating the unique InvoiceId on this InvoiceView.vue file here
       this.currentInvoice = this.currentInvoiceArray[0];
     },
+    // This effective for the Edit button on the invoice details
+    toggleEditInvoice() {
+      this.TOGGLE_EDIT_INVOICE();
+      this.TOGGLE_INVOICE();
+      //I head back to invoiceModal to change the mode when you click the edit button.
+      //Check the writing on inside the invoiceModal
+    },
   },
   computed: {
     ...mapState(["currentInvoiceArray"]),

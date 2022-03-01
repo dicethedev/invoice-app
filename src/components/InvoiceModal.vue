@@ -9,7 +9,10 @@
     <form @submit.prevent="submitForm" class="invoice-content">
       <!-- Preloader here is for invoiceModal -->
       <Preloader v-show="preloader" />
-      <h1>New Invoice</h1>
+      <!-- Adding v-if here so that the <h1> can change when you Click on edit button on invoiceview -->
+      <h1 v-if="!editInvoice">New Invoice</h1>
+      <!-- this is working for the toggleEditButton on InvoiceView -->
+      <h1 v-else>Edit Invoice</h1>
 
       <!-- Bill From -->
       <div class="bill-from flex flex-column">
@@ -244,14 +247,32 @@
         </div>
         <!-- right hand side -->
         <div class="right flex">
+          <!-- Added a v-if in the saveDraft replacing with update Invoice to make effect to EditInvoice -->
           <!-- <button @click="saveDraft" class="dark-blue">Save as Draft</button>
           <button @click="publishInvoice" class="blue">Issue Invoice</button> -->
-          <button type="submit" @click="saveDraft" class="dark-blue">
+          <button
+            v-if="!editInvoice"
+            type="submit"
+            @click="saveDraft"
+            class="dark-blue"
+          >
             Save as Draft
           </button>
-          <button type="submit" @click="publishInvoice" class="blue">
+          Button 2
+          <button
+            v-if="!editInvoice"
+            type="submit"
+            @click="publishInvoice"
+            class="blue"
+          >
             Issue Invoice
           </button>
+          <!-- Button 3 -->
+          <!-- This button is effective for the invoiceView.vue -->
+          <button v-if="editInvoice" type="submit" class="sky-color">
+            Update Invoice
+          </button>
+          <!-- I head back to modal.vue to add some mapstate to toggle fuction well -->
         </div>
       </div>
     </form>
@@ -263,7 +284,8 @@
 import db from "@/firebase/firebaseInit";
 import Preloader from "@/components/Preloader.vue";
 //i went back up to form and add a <Preloader /> to it
-import { mapMutations } from "vuex"; //import this to this project
+//The mapState added here is coming from the invoiceView from the toggleEditButton
+import { mapMutations, mapState } from "vuex"; //import this to this project
 import { uid } from "uid"; //uid is to generate id automatically
 export default {
   name: "invoiceModal",
@@ -310,7 +332,8 @@ export default {
 
   methods: {
     //...mapMutations(["TOGGLE_INVOICE"]), // adding a mapMutations here
-    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL"]),
+    // add another mutation inside the array called TOGGLE_EDIT_INVOICE
+    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
 
     // working on with the ref="invoiceWrap" here // you can find this from the above code
     //this checkClick is controlling the message that will pop-up on the application which you can click anywhere on the screen
@@ -322,6 +345,9 @@ export default {
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
+      if (this.editInvoice) {
+        this.TOGGLE_EDIT_INVOICE();
+      }
     },
 
     addNewInvoiceItem() {
@@ -413,6 +439,10 @@ export default {
     submitForm() {
       this.uploadInvoice();
     },
+  },
+  //mapState here is controlling the toggleEditButton on the InvoiceView
+  computed: {
+    ...mapState(["editInvoice"]),
   },
   // calculating the payment terms below in watch: {}
   watch: {

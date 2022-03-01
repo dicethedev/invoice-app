@@ -167,6 +167,10 @@ button,
   color: #fff;
 }
 
+.sky-color {
+  background-color: #00cffd;
+}
+
 .dark-blue {
   background-color: #ec5757;
 }

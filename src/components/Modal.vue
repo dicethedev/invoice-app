@@ -11,11 +11,12 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "modal",
   methods: {
-    ...mapMutations(["TOGGLE_MODAL", "TOGGLE_INVOICE"]),
+    // added mutation inside the array -  TOGGLE_EDIT_INVOICE
+    ...mapMutations(["TOGGLE_MODAL", "TOGGLE_INVOICE", " TOGGLE_EDIT_INVOICE"]),
 
     closeModal() {
       this.TOGGLE_MODAL();
@@ -24,7 +25,15 @@ export default {
     closeInvoice() {
       this.TOGGLE_MODAL();
       this.TOGGLE_INVOICE(); // this toggle-invoice() when it is close it will be close completely
+      if (this.editInvoice) {
+        this.TOGGLE_EDIT_INVOICE();
+      }
+      // I head back to InvoiceModal inside closeInvoice to add a condition to it
     },
+  },
+  computed: {
+    ...mapState(["editInvoice"]),
+    // head back to method and add some "if" condition to it under closeInvoice() method
   },
 };
 </script>

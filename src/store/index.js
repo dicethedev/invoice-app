@@ -32,6 +32,11 @@ export default createStore({
       state.invoicesLoaded = true;
       //I return to App.vue to pass a function in it
     },
+     //available for Edir=t invoice
+    TOGGLE_EDIT_INVOICE(state){
+       state.editInvoice = !state.editInvoice;
+     },
+
     // This working for the populating of Unique ID for InvoiceView.vue file
     SET_CURRENT_INVOICE(state, payLoad) {
        state.currentInvoiceArray = state.invoiceData.filter(invoice => {
@@ -39,9 +44,6 @@ export default createStore({
       });
      }
   },
-     TOGGLE_EDIT_INVOICE(state){
-       state.editInvoice = !state.editInvoice;
-     },
   actions: {
     //to retrieve the data from firebase
     // I commit in here and state value // pass async to await the data from the firebase
