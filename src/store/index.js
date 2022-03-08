@@ -9,7 +9,7 @@ export default createStore({
     invoicesLoaded: null,
     //This is apply in invoiceView.vue file
     currentInvoiceArray: null,
-      //This editInvoice is active in the invoiceView in Views Folder
+    //This editInvoice is active in the invoiceView in Views Folder
     editInvoice: null,
   },
   mutations: {
@@ -32,17 +32,23 @@ export default createStore({
       state.invoicesLoaded = true;
       //I return to App.vue to pass a function in it
     },
-     //available for Edir=t invoice
-    TOGGLE_EDIT_INVOICE(state){
-       state.editInvoice = !state.editInvoice;
-     },
+    //available for Edir=t invoice
+    TOGGLE_EDIT_INVOICE(state) {
+      state.editInvoice = !state.editInvoice;
+    },
+
+
+    DELETE_INVOICE(state, payLoad) {
+      state.invoiceData = state.invoiceData.filter(invoice => invoice.docId !== payLoad);
+      //I went down to create an action for this DELETE_INVOICE
+    },
 
     // This working for the populating of Unique ID for InvoiceView.vue file
     SET_CURRENT_INVOICE(state, payLoad) {
-       state.currentInvoiceArray = state.invoiceData.filter(invoice => {
-         return invoice.invoiceId === payLoad;
+      state.currentInvoiceArray = state.invoiceData.filter(invoice => {
+        return invoice.invoiceId === payLoad;
       });
-     }
+    }
   },
   actions: {
     //to retrieve the data from firebase
@@ -62,7 +68,7 @@ export default createStore({
             billerZipCode: doc.data().billerZipCode,
             billerCountry: doc.data().billerCountry,
             customerName: doc.data().customerName,
-            customerEmail: doc.data(). customerEmail,
+            customerEmail: doc.data().customerEmail,
             customerStreetAddress: doc.data().customerStreetAddress,
             customerCity: doc.data().customerCity,
             customerZipCode: doc.data().customerZipCode,
@@ -84,7 +90,22 @@ export default createStore({
       });
       commit('INVOICES_LOADED');
     },
+    // UPDATE_INVOICE IS WORKING WITH DELETE_INVOICE\
+    //Using the docId to pass as a payLoad and delete_Invoice
+    //Then I use the routeId inside SET_CURRENT_INVOICE to reset the current Invoice
+    async UPDATE_INVOICE({ commit, dispatch }, { docId, routeId }) {
+      commit('DELETE_INVOICE', docId);
+      await dispatch('GET_INVOICES');
+      //commit below will toggle the invoice close and turn off editing invoice state here
+      commit('TOGGLE_INVOICE');
+      commit('TOGGLE_EDIT_INVOICE');
+      commit('SET_CURRENT_INVOICE', routeId);
 
+      //I went back to InvoiceModal.vue to add a fuction in data() and is called the docId: null,
+      // and create a function similar to upload and is called  updateInvoice() after uploadInvoice
+      //I also pass map the action in the methods area called ...mapActions(['UPDATE_INVOICE']) and 
+      //don't forget to import the mapActions
+    },
 
   },
   modules: {

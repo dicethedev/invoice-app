@@ -285,13 +285,15 @@ import db from "@/firebase/firebaseInit";
 import Preloader from "@/components/Preloader.vue";
 //i went back up to form and add a <Preloader /> to it
 //The mapState added here is coming from the invoiceView from the toggleEditButton
-import { mapMutations, mapState } from "vuex"; //import this to this project
+//The mapActions added is coming from the index.js in store for actions for UpdateInvoice
+import { mapActions, mapMutations, mapState } from "vuex"; //import this to this project
 import { uid } from "uid"; //uid is to generate id automatically
 export default {
   name: "invoiceModal",
   data() {
     return {
       dateOptions: { year: "numeric", month: "short", day: "numeric" },
+      docId: null,
       preloader: null,
       billerStreetAddress: null,
       billerCity: null,
@@ -315,7 +317,6 @@ export default {
       invoiceTotal: 0,
     };
   },
-
   components: {
     Preloader,
   },
@@ -367,6 +368,8 @@ export default {
     //...mapMutations(["TOGGLE_INVOICE"]), // adding a mapMutations here
     // add another mutation inside the array called TOGGLE_EDIT_INVOICE
     ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
+
+    ...mapActions(["UPDATE_INVOICE"]),
 
     // working on with the ref="invoiceWrap" here // you can find this from the above code
     //this checkClick is controlling the message that will pop-up on the application which you can click anywhere on the screen
@@ -470,7 +473,65 @@ export default {
       this.TOGGLE_INVOICE();
     },
 
+    async updateInvoice() {
+      //Asynchronous code allows the program to be executed immediately where the synchronous
+      // code will block further execution of the remaining code until it finishes the current one
+      //validating if the user enter in the invoiceItemList i don't want that to be empty
+      //<+ == sign means less than or equal
+      if (this.invoiceItemList.length <= 0) {
+        alert("Please ensure you filled out the work items!");
+        return; // return the result back
+      }
+      //preloader will be set to true if you upload the invoice data
+      //i went down below await dataBase.set to add the false condition
+      //start the preloader to true
+      this.preloader = true;
+
+      this.calcInvoiceTotal();
+
+      //pass a function inside doc() called docId
+      const dataBase = db.collection("invoices").doc(this.docId);
+
+      //update is part of firestore library
+      await dataBase.update({
+        billerStreetAddress: this.billerStreetAddress,
+        billerCity: this.billerCity,
+        billerZipCode: this.billerZipCode,
+        billerCountry: this.billerCountry,
+        customerName: this.customerName,
+        customerEmail: this.customerEmail,
+        customerStreetAddress: this.customerStreetAddress,
+        customerCity: this.customerCity,
+        customerZipCode: this.customerZipCode,
+        customerCountry: this.customerCountry,
+        paymentTerms: this.paymentTerms,
+        paymentDueDateUnix: this.paymentDueDateUnix,
+        paymentDueDate: this.paymentDueDate,
+        productDescription: this.productDescription,
+        invoiceItemList: this.invoiceItemList,
+        invoiceTotal: this.invoiceTotal,
+      });
+
+      // Stopping Preloader execution here
+      this.preloader = false;
+
+      //I created a new object here
+      //the routeId you can check the index.js in store for the declaration
+      const data = {
+        docId: this.docId,
+        routeId: this.$route.params.invoiceId,
+      };
+
+      this.UPDATE_INVOICE(data);
+    },
+
+    //added a "if" check after creating the updateInvoice to check the submitForm if is true
     submitForm() {
+      if (this.editInvoice) {
+        this.updateInvoice();
+        return;
+        //went back to updateInvoice() to run a check inside it
+      }
       this.uploadInvoice();
     },
   },
