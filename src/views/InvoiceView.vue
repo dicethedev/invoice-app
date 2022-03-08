@@ -163,7 +163,18 @@ export default {
     },
   },
   computed: {
-    ...mapState(["currentInvoiceArray"]),
+    // added editInvoice inside the mapstate because if each time their is a change in the value
+    // you want to go ahead and watch that. added a watch lifecycle hook for vue
+    ...mapState(["currentInvoiceArray", "editInvoice"]),
+  },
+  //This watch decalaration will make the edited details update fast and display it on your screen
+  watch: {
+    //each time this toggle.. look for the condition false
+    editInvoice() {
+      if (!this.editInvoice) {
+        this.currentInvoice = this.currentInvoiceArray[0];
+      }
+    },
   },
 };
 </script>

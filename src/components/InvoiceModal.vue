@@ -523,6 +523,7 @@ export default {
       };
 
       this.UPDATE_INVOICE(data);
+      //I went back to invoiceView file to add editInvoice inside the mapState
     },
 
     //added a "if" check after creating the updateInvoice to check the submitForm if is true
