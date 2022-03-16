@@ -369,7 +369,7 @@ export default {
     // add another mutation inside the array called TOGGLE_EDIT_INVOICE
     ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
 
-    ...mapActions(["UPDATE_INVOICE"]),
+    ...mapActions(["UPDATE_INVOICE", "GET_INVOICES"]),
 
     // working on with the ref="invoiceWrap" here // you can find this from the above code
     //this checkClick is controlling the message that will pop-up on the application which you can click anywhere on the screen
@@ -471,6 +471,10 @@ export default {
       this.preloader = false;
 
       this.TOGGLE_INVOICE();
+
+      //This function is working for InvoiceView. so taht it will help when you create a new invoice
+      //it will not refresh.. it will just create faster
+      this.GET_INVOICES();
     },
 
     async updateInvoice() {

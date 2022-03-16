@@ -161,6 +161,7 @@ export default createStore({
       });
       commit('UPDATE_STATUS_TO_PENDING', docId);
     }
+     //Went back to InvoiceView to map inside mutations and run a function to be effect to the app
   }, 
   modules: {
   },
