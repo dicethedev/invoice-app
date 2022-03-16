@@ -144,7 +144,7 @@ export default createStore({
         invoicePaid: true,
         invoicePending: false,
       });
-      commit('UPADTE_STATUS_TO_PAID');
+      commit('UPADTE_STATUS_TO_PAID', docId);
     },
 
     async UPADTE_STATUS_TO_PENDING(commit, docId) {
@@ -154,7 +154,7 @@ export default createStore({
         invoicePending: true,
         invoiceDraft: false,
       });
-      commit('UPADTE_STATUS_TO_PENDING');
+      commit('UPADTE_STATUS_TO_PENDING', docId);
     }
   }, 
   modules: {
