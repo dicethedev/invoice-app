@@ -68,6 +68,7 @@ export default {
     //displaying the dropdown menu here
     return {
       filterMenu: null,
+      filterInvoice: null,
     };
   },
   components: {
