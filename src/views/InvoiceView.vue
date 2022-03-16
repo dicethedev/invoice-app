@@ -133,8 +133,9 @@
   </div>
 </template>
 
+
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   name: "invoiceView",
   data() {
@@ -146,7 +147,14 @@ export default {
     this.getCurrentInvoice();
   },
   methods: {
-    ...mapMutations(["SET_CURRENT_INVOICE"]),
+    // added another Mutations inside
+    ...mapMutations([
+      "SET_CURRENT_INVOICE",
+      "TOGGLE_EDIT_INVOICE",
+      "TOGGLE_INVOICE",
+    ]),
+
+    ...mapActions(["DELETE_INVOICE"]),
 
     getCurrentInvoice() {
       // passing the params invoiceId from router to get the unique Id
@@ -160,6 +168,15 @@ export default {
       this.TOGGLE_INVOICE();
       //I head back to invoiceModal to change the mode when you click the edit button.
       //Check the writing on inside the invoiceModal
+    },
+
+    //deleteInvoice is from Button 2 of clickevent &
+    //I import ...mapActions to place
+    async deleteInvoice(docId) {
+      await this.DELETE_INVOICE(docId);
+
+      //I need to return back to the home page(Home.vue) that is why I input this code fuction below
+      this.$router.push({ name: "Home" });
     },
   },
   computed: {

@@ -42,7 +42,6 @@ export default createStore({
       state.invoiceData = state.invoiceData.filter(invoice => invoice.docId !== payLoad);
       //I went down to create an action for this DELETE_INVOICE
     },
-
     // This working for the populating of Unique ID for InvoiceView.vue file
     SET_CURRENT_INVOICE(state, payLoad) {
       state.currentInvoiceArray = state.invoiceData.filter(invoice => {
@@ -50,6 +49,7 @@ export default createStore({
       });
     }
   },
+  
   actions: {
     //to retrieve the data from firebase
     // I commit in here and state value // pass async to await the data from the firebase
@@ -107,7 +107,15 @@ export default createStore({
       //don't forget to import the mapActions
     },
 
-  },
+    //DELETE INVOICE DETAILS Actions is here below\
+    //The docId inide the function is the payLoad that is the invoice Id
+    async DELETE_INVOICE({commit}, docId){
+      //db.collection is from the firebase and the doc is reserved for firebase and it will help to get the currentInvoice
+       const getInvoice = db.collection('invoices').doc(docId);
+       await getInvoice.delete();
+       commit('DELETE_INVOICE', docId);
+    }
+  }, 
   modules: {
   },
 });
