@@ -154,7 +154,11 @@ export default {
       "TOGGLE_INVOICE",
     ]),
 
-    ...mapActions(["DELETE_INVOICE"]),
+    ...mapActions([
+      "DELETE_INVOICE",
+      "UPDATE_STATUS_TO_PAID",
+      "UPDATE_STATUS_TO_PENDIG",
+    ]),
 
     getCurrentInvoice() {
       // passing the params invoiceId from router to get the unique Id
@@ -177,6 +181,13 @@ export default {
 
       //I need to return back to the home page(Home.vue) that is why I input this code fuction below
       this.$router.push({ name: "Home" });
+    },
+    updateStatusToPaid(docId) {
+      this.UPDATE_STATUS_TO_PAID(docId);
+    },
+
+    updateStatusToPending(docId) {
+      this.UPDATE_STATUS_TO_PENDIG(docId);
     },
   },
   computed: {

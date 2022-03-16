@@ -43,7 +43,7 @@ export default createStore({
     },
 
      //Created a two(2) new mutations here
-    UPADTE_STATUS_TO_PAID(state, payLoad) {
+    UPDATE_STATUS_TO_PAID(state, payLoad) {
        //Iterating through the function using forrach loop
        state.invoiceData.forEach(invoice => {
          if(invoice.docId === payLoad) {
@@ -53,7 +53,9 @@ export default createStore({
        });
      },
 
-     UPADTE_STATUS_TO_PENDING(state, payLoad) {
+    
+    
+    UPDATE_STATUS_TO_PENDING(state, payLoad) {
        //Iterating through the function using forrach loop
        state.invoiceData.forEach(invoice => {
          if(invoice.docId === payLoad) {
@@ -63,6 +65,9 @@ export default createStore({
          }
        });
      },
+
+    
+    
     // This working for the populating of Unique ID for InvoiceView.vue file
     SET_CURRENT_INVOICE(state, payLoad) {
       state.currentInvoiceArray = state.invoiceData.filter(invoice => {
@@ -138,23 +143,23 @@ export default createStore({
     },
     
     //This actions is for UPADTE_STATUS_TO_PENDING & UPADTE_STATUS_TO_PAID
-    async UPADTE_STATUS_TO_PAID(commit, docId) {
+    async UPDATE_STATUS_TO_PAID(commit, docId) {
       const getInvoice = db.collection('invoices').doc(docId);
       await getInvoice.update({
         invoicePaid: true,
         invoicePending: false,
       });
-      commit('UPADTE_STATUS_TO_PAID', docId);
+      commit('UPDATE_STATUS_TO_PAID', docId);
     },
 
-    async UPADTE_STATUS_TO_PENDING(commit, docId) {
+    async UPDATE_STATUS_TO_PENDING(commit, docId) {
       const getInvoice = db.collection('invoices').doc(docId);
       await getInvoice.update({
         invoicePaid: false,
         invoicePending: true,
         invoiceDraft: false,
       });
-      commit('UPADTE_STATUS_TO_PENDING', docId);
+      commit('UPDATE_STATUS_TO_PENDING', docId);
     }
   }, 
   modules: {
