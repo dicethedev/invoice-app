@@ -135,6 +135,26 @@ export default createStore({
        const getInvoice = db.collection('invoices').doc(docId);
        await getInvoice.delete();
        commit('DELETE_INVOICE', docId);
+    },
+    
+    //This actions is for UPADTE_STATUS_TO_PENDING & UPADTE_STATUS_TO_PAID
+    async UPADTE_STATUS_TO_PAID(commit, docId) {
+      const getInvoice = db.collection('invoices').doc(docId);
+      await getInvoice.update({
+        invoicePaid: true,
+        invoicePending: false,
+      });
+      commit('UPADTE_STATUS_TO_PAID');
+    },
+
+    async UPADTE_STATUS_TO_PENDING(commit, docId) {
+      const getInvoice = db.collection('invoices').doc(docId);
+      await getInvoice.update({
+        invoicePaid: false,
+        invoicePending: true,
+        invoiceDraft: false,
+      });
+      commit('UPADTE_STATUS_TO_PENDING');
     }
   }, 
   modules: {
