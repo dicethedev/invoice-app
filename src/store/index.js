@@ -37,11 +37,32 @@ export default createStore({
       state.editInvoice = !state.editInvoice;
     },
 
-
     DELETE_INVOICE(state, payLoad) {
       state.invoiceData = state.invoiceData.filter(invoice => invoice.docId !== payLoad);
       //I went down to create an action for this DELETE_INVOICE
     },
+
+     //Created a two(2) new mutations here
+    UPADTE_STATUS_TO_PAID(state, payLoad) {
+       //Iterating through the function using forrach loop
+       state.invoiceData.forEach(invoice => {
+         if(invoice.docId === payLoad) {
+              invoice.invoicePaid = true;
+              invoice.invoicePending = false;
+         }
+       });
+     },
+
+     UPADTE_STATUS_TO_PENDING(state, payLoad) {
+       //Iterating through the function using forrach loop
+       state.invoiceData.forEach(invoice => {
+         if(invoice.docId === payLoad) {
+              invoice.invoicePaid = false;
+              invoice.invoicePending = true;
+              invoice.invoiceDraft = false;
+         }
+       });
+     },
     // This working for the populating of Unique ID for InvoiceView.vue file
     SET_CURRENT_INVOICE(state, payLoad) {
       state.currentInvoiceArray = state.invoiceData.filter(invoice => {
@@ -49,7 +70,7 @@ export default createStore({
       });
     }
   },
-  
+
   actions: {
     //to retrieve the data from firebase
     // I commit in here and state value // pass async to await the data from the firebase
