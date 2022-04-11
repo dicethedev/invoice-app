@@ -1,5 +1,8 @@
 # invoice
 
+![project-image-2](https://user-images.githubusercontent.com/85754527/162850867-5505e61b-9424-47be-935c-d21c4916aa86.jpg)
+
+
 Learning Vue, Vuex & Firebase
 
 ## Project setup
