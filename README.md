@@ -44,52 +44,49 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
  "vuex": "^4.0.0-0", Using Vuex for state management
 
-### Create a Component folder in the src and inside the components folder i created a Navigation.vue file.
+### Create a Component folder in the src and inside the components folder I created a Navigation.vue file.
 
 ## working with the responsive of 900px --- if is below 900px it will change to row on Navigation --- if is above 900px it will change on Navigation to columns and A message will popup on the screen
 
 ## Displaying some information on the Home.vue
 ### 
 
-### Went to Firebase that is Firebase Console and create a new folder and i name it Customer Invoice App and i remove Google analystics ### npm install firebase
- i locate Firebase database and i create a database for this project
- And after loading i click the test-mode and i next and enabling the firebase so that it can Provison the cloud firebase
+### Went to Firebase that is Firebase Console and create a new folder and I name it Customer Invoice App and I remove Google analystics
+### npm install firebase
+ I locate Firebase database and I create a database for this project
+ And after loading I click the test-mode and I next and enabling the firebase so that it can Provison the cloud firebase
 
- Then i start to create start collection ### I need to connect the frontend to the backend now. so, i went back to project overview in firebase and on the screen i click on webapp to register my app, so that i can add it to frontend to backend
+ Then I start to create start collection ### I need to connect the frontend to the backend now. so, I went back to project overview in firebase and on the screen I click on webapp to register my app, so that i can add it to frontend to backend
 
-### I create a folder inside the src folder namely: Firebase and also inside the Firebase folder i create a file namely: firebaseinit.js == the place where i can connect to the backend
+### I create a folder inside the src folder and name it: Firebase; and also inside the Firebase folder i create a file name: firebaseinit.js == this place is where I can connect to the backend to Firestore services available on Firebase.
 
-## To install them, you can run: npm install --save firebase/app firebase/firestore I install this to get access to firebase
+## You need to install the packges for firestore. You can run: npm install --save firebase/app firebase/firestore on your Terminial. 
 
-
-### inside components i created a preloader.vue file --- 
-  This where loading snippets is created and i imported the components inside InvoiceModal.vue file
+### inside components I created a preloader.vue file --- 
+  This where loading snippets is created and I imported the components inside InvoiceModal.vue file
 
   added the componenet <Preloader /> inside the form in InvoiceModal.vue the added inside the preloader
- a data value (v-show) <Preloader v-show="preloader" /> then i end back to data() options to create the preloader as null object
+ a data value (v-show) <Preloader v-show="preloader" /> then I end back to data() options to create the preloader as null object
 
  ### Created a new file name Modal.vue inside components
  This where i created a pop up message and after then I imported the compenent into the entire application that is APP.vue then i place it above transition index <Modal /> 
- 
-  ###modalActive area 
-
- Now, i need add some functionality to it ----- 
+	@@ -77,10 +77,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
  I went back to store folder and locate the index.js, Inside the index.js i created new state value ( modalActive: null,)  and i created a new mutations and inside the mutations i added ( TOGGLE_MODAL(state) {
       state.modalActive = !state.modalActive
     },) 
-Then i head back to App.vue inside the computed: i added this (...mapState(["invoiceModal", "modalActive"])) 
-Then i created a condition i went back to <Modal /> and add ( <Modal v-if="modalActive" />)
+Then I head back to App.vue inside the computed: i added this (...mapState(["invoiceModal", "modalActive"])) 
+Then I created a condition i went back to <Modal /> and add ( <Modal v-if="modalActive" />)
 
-I went back to InvoiceModal and i puck the function that have i created before that is "checkClick"
+I went back to InvoiceModal and I pick the function that I have created before, i.e "checkClick"
 
 went down to methods: {} and create functionality for this below 
 
-
-//this checkClick is determining when a user click outside anyway on the browser then Toggle left will disappear
-
+	@@ -90,8 +90,6 @@ went down to methods: {} and create functionality for this below
 
 # This optional --- You can connect to MySQL database applying NodeJs with it, instead of Firebase
 
+
+### This is when I was trying to connect to the database using Nodejs and MySQL
 ### Connecting to the backend (Database) using this command line
 
 npm i express --save
