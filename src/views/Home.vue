@@ -10,15 +10,20 @@
       <div class="right flex">
         <!-- @click is Vue function working with Events and that is the shortcut for v-on -->
         <div @click="toggleFilterMenu" class="status flex">
-          <span>Invoices by status</span>
+          <!--    <span>Filter by status </span> -->
+          <span
+            >Filter by status
+            <span v-if="filteredInvoice">:{{ filteredInvoice }}</span></span
+          >
           <img src="@/assets/icon-arrow-down.svg" alt="" />
 
           <!-- The Dropdown action is and the v-show is the vue function from vue -->
           <ul v-show="filterMenu" class="status-menu">
-            <li>Drafted</li>
-            <li>Pending</li>
-            <li>Paid</li>
-            <li>Clear Status</li>
+            <li @click="filteredInvoices">Drafted</li>
+            <li @click="filteredInvoices">Pending</li>
+            <li @click="filteredInvoices">Paid</li>
+            <li @click="filteredInvoices">Clear Filters</li>
+            <!-- Went down to method to create a function for this click event that I added -->
           </ul>
         </div>
 
@@ -37,8 +42,9 @@
     <!-- invoiceData.length > 3 -->
     <div v-if="invoiceData.length > 0">
       <!-- itetaring through using v-for and also a v-bind is inside the Invoice Component (:invoice) -->
+      <!-- v-for="(invoice, index) in invoiceData" -->
       <Invoice
-        v-for="(invoice, index) in invoiceData"
+        v-for="(invoice, index) in filteredData"
         :invoice="invoice"
         :key="index"
       />
@@ -69,6 +75,7 @@ export default {
     return {
       filterMenu: null,
       filterInvoice: null,
+      //Went back to upward to the Filter status div to add a client event to it name(filteredInvoices)
     };
   },
   components: {
@@ -87,11 +94,37 @@ export default {
       //this.filterMenu is opposite to the other filter below (from Flase to True or True to False)
       this.filterMenu = !this.filterMenu;
     },
+    //the (e) inside this function below is called the "event parameter"
+    filteredInvoices(e) {
+      if (e.target.innerText === "Clear Filters") {
+        this.filteredInvoice = null;
+        return;
+      }
+      this.filteredInvoice = e.target.innerText;
+    },
+    // Create a filteredData -- so that when click on the buttons of status it will bring the result out
   },
 
   computed: {
     ...mapState(["invoiceData"]),
     // After this place... I went back up to add a div to display the information
+
+    //The filteredData
+    filteredData() {
+      return this.invoiceData.filter((invoice) => {
+        if (this.filteredInvoice === "Draft") {
+          return invoice.invoiceDraft === true;
+        }
+        if (this.filteredInvoice === "Pending") {
+          return invoice.invoicePending === true;
+        }
+        if (this.filteredInvoice === "Paid") {
+          return invoice.invoicePaid === true;
+        }
+        return invoice;
+        // I went back upward to remove invoiceData and add filteredData to show the current status
+      });
+    },
   },
 };
 </script>

@@ -258,7 +258,7 @@
           >
             Save as Draft
           </button>
-          Button 2
+          <!-- Button 2 -->
           <button
             v-if="!editInvoice"
             type="submit"
