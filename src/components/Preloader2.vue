@@ -2,10 +2,12 @@
   <transition name="fade">
     <div v-if="show" class="preloader">
       <div class="preloader-content">
-        <span></span>
-        <div class="logo">
+        <span>
+          <div class="logo">
           <img src="@/assets/Logo.svg" alt="" />
         </div>
+        </span>
+   
       </div>
     </div>
   </transition>
@@ -53,11 +55,11 @@ export default {
       width: 180px;
       height: 180px;
       margin: 0 auto;
-      border: 5px solid transparent;
+      border: 10px solid transparent;
       border-top-color: #00cffd;
       // border-bottom-style: double;
       border-bottom-color: #ffff;
-      border-left-color: #ff0000;
+      border-left-color: #00ff88;
       border-left-style: double;
       border-right-color: #00ff88;
       // border-right-style: double;
@@ -76,7 +78,6 @@ export default {
       background-repeat: no-repeat;
     }
     .logo {
-      margin-top: -9.7rem;
       display: flex;
       justify-content: center;
       align-items: center;

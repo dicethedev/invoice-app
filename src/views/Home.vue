@@ -74,7 +74,7 @@ export default {
     //displaying the dropdown menu here
     return {
       filterMenu: null,
-      filterInvoice: null,
+      filteredInvoice: null,
       //Went back to upward to the Filter status div to add a client event to it name(filteredInvoices)
     };
   },
