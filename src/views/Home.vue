@@ -19,7 +19,7 @@
 
           <!-- The Dropdown action is and the v-show is the vue function from vue -->
           <ul v-show="filterMenu" class="status-menu">
-            <li @click="filteredInvoices">Drafted</li>
+            <li @click="filteredInvoices">Draft</li>
             <li @click="filteredInvoices">Pending</li>
             <li @click="filteredInvoices">Paid</li>
             <li @click="filteredInvoices">Clear Filters</li>
