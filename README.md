@@ -10,8 +10,6 @@ Learning Vue, Vuex & Firebase
 npm install -- This will install all the dependencies that i need in this project
 
 
-
-
 ```
 
 ### Compiles and hot-reloads for development
@@ -107,3 +105,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password
 flush privileges;
 
 I use this above in MySql work bench
+
+
+### For Print to PDF Downloaded File 
+
+I install this on my terminal ---- "npm install --save html2pdf.js"

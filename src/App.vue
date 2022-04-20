@@ -191,6 +191,9 @@ button,
   // orange = #ff8f00
   background-color: #ff00d4;
 }
+.PDF-color {
+  background-color: #00ff00;
+}
 
 // utility classes
 

@@ -53,9 +53,10 @@
     <div v-else class="oops flex flex-column">
       <img src="@/assets/illustration-opps.svg" alt="" />
       <h1>oops!</h1>
-      <h3>There no invoices here!</h3>
+      <h3>Your network might be the issue... Don't Shrink!</h3>
       <p>
-        Create a new invoice by clicking the New Invoice button and get started
+        Refresh this application to see invoices or Create a new invoice
+        by clicking the New Invoice button and get started
         with this Appliaction.
       </p>
     </div>

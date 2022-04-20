@@ -55,11 +55,16 @@
         >
           Mark as Pending
         </button>
+
+        <!-- Button 5 -->
+        <button @click="exportToPDF" class="PDF-color">
+         Print as PDF
+        </button>
       </div>
     </div>
 
     <!-- Invoice Details area -->
-    <div class="invoice-details flex flex-column">
+    <div class="invoice-details flex flex-column" ref="document">
       <div class="top flex">
         <!-- div left -->
         <!-- All this info here is coming form the Firebase Database -->
@@ -130,12 +135,15 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
+// importing the htmt2pdf inside this component
+import html2pdf from 'html2pdf.js';
+
 export default {
   name: "invoiceView",
   data() {
@@ -147,6 +155,18 @@ export default {
     this.getCurrentInvoice();
   },
   methods: {
+     
+     //I pass a ref="document" in the <div> above
+     //function for exportToPDF
+       exportToPDF () {
+				html2pdf(this.$refs.document, {
+					margin: 1,
+					filename: 'invoice.pdf',
+					image: { type: 'jpeg', quality: 0.98 },
+					html2canvas: { dpi: 192, letterRendering: true },
+					jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
+				})
+			},
     // added another Mutations inside
     ...mapMutations([
       "SET_CURRENT_INVOICE",

@@ -64,9 +64,7 @@ export default createStore({
               invoice.invoiceDraft = false;
          }
        });
-     },
-
-    
+     },    
     
     // This working for the populating of Unique ID for InvoiceView.vue file
     SET_CURRENT_INVOICE(state, payLoad) {
