@@ -207,7 +207,7 @@ export default {
     },
 
     updateStatusToPending(docId) {
-      this.UPDATE_STATUS_TO_PENDIG(docId);
+      this.UPDATE_STATUS_TO_PENDING(docId);
     },
   },
   computed: {
