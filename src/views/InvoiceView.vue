@@ -177,7 +177,7 @@ export default {
     ...mapActions([
       "DELETE_INVOICE",
       "UPDATE_STATUS_TO_PAID",
-      "UPDATE_STATUS_TO_PENDIG",
+      "UPDATE_STATUS_TO_PENDING",
     ]),
 
     getCurrentInvoice() {
