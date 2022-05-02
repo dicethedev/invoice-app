@@ -13,7 +13,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 export default {
-  name: "modal",
+  name: "MyModal",
   methods: {
     // added mutation inside the array -  TOGGLE_EDIT_INVOICE
     ...mapMutations(["TOGGLE_MODAL", "TOGGLE_INVOICE", " TOGGLE_EDIT_INVOICE"]),

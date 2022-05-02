@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: "invoice",
+  name: "MyInvoice",
   //The props pass here is coming from the invoice that is bind in the Home.vue -- Check Invoice component
   props: ["invoice"],
 };

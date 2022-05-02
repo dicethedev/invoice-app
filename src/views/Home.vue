@@ -70,7 +70,7 @@ import Invoice from "@/components/Invoice.vue";
 // And I also added a computed method where the mapstate is defined for use
 import { mapMutations, mapState } from "vuex";
 export default {
-  name: "Home",
+  name: "MyHome",
   data() {
     //displaying the dropdown menu here
     return {

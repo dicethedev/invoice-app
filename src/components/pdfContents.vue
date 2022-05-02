@@ -1,65 +1,6 @@
 <template>
-  <!-- Testing this line of code-->
-  <!-- Check script file below under methods and see why the InvoiceId is generating by itself -->
-  <!-- <div>{{ currentInvoice.invoiceId }}</div> -->
-  <div v-if="currentInvoice" class="invoice-view container">
-    <router-link class="nav-link flex" :to="{ name: 'Home' }">
-      <img src="@/assets/icon-arrow-left.svg" alt="" /> Go back Home
-    </router-link>
-
-    <!-- Header Area -->
-    <div class="header flex">
-      <div class="left flex">
-        <span>Status</span>
-        <!-- A class is bind adding a condition either true or false for the price payment -->
-        <div
-          class="status-button flex"
-          :class="{
-            paid: currentInvoice.invoicePaid,
-            draft: currentInvoice.invoiceDraft,
-            pending: currentInvoice.invoicePending,
-          }"
-        >
-          <span v-if="currentInvoice.invoicePaid">Paid</span>
-          <span v-if="currentInvoice.invoiceDraft">Draft</span>
-          <span v-if="currentInvoice.invoicePending">Pending</span>
-        </div>
-      </div>
-
-      <div class="right flex">
-        <!-- Button 1 -->
-        <!-- I pass a parameter of currentInvoice inside toggleEditInvoice -->
-        <!--I remove (currentInvoice.docId)from toggleEditInvoice because I don't need it again -->
-        <button @click="toggleEditInvoice" class="dark-blue">Edit</button>
-
-        <!-- Button 2 -->
-        <button @click="deleteInvoice(currentInvoice.docId)" class="red">
-          Delete
-        </button>
-
-        <!-- Button 3 -->
-        <!-- This button is where you can mark it as paid or pending -->
-        <button
-          v-if="currentInvoice.invoicePending"
-          @click="updateStatusToPaid(currentInvoice.docId)"
-          class="green"
-        >
-          Mark as Paid
-        </button>
-
-        <!-- Button 4 -->
-        <button
-          v-if="currentInvoice.invoiceDraft || currentInvoice.invoicePaid"
-          @click="updateStatusToPending(currentInvoice.docId)"
-          class="pink"
-        >
-          Mark as Pending
-        </button>
-      </div>
-    </div>
-
-    <!-- Invoice Details area -->
-    <div class="invoice-details flex flex-column">
+  <!-- Invoice Details area -->
+    <div class="invoice-view invoice-details container flex flex-column" ref="document">
       <div class="top flex">
         <!-- div left -->
         <!-- All this info here is coming form the Firebase Database -->
@@ -131,16 +72,12 @@
       </div>
     </div>
 
-       <PdfContents />
-    </div>
-    
+    <button @click="printDocumentPDF" class="PDF-color">Print PDF</button>
 </template>
-
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import PdfContents from "@/components/pdfContents.vue"
-
+import html2pdf from 'html2pdf.js';
 export default {
   name: "invoiceView",
   data() {
@@ -149,28 +86,24 @@ export default {
     };
   },
 
- components: {
-    PdfContents
+  created() {
+    this.getCurrentInvoice();
   },
-
-
-   created() {
-   this.getCurrentInvoice();
-  },
-
   methods: {
 
-    //  downloadFile() {
-    //       let w = window.open()
-    //       w.document.write(this.$refs.DownloadComp.$el.innerHTML)
-    //       w.document.close()
-    //       w.setTimeout(function () {
-    //         w.print()
-    //       }, 1000)
-    // },
+    //   I pass a ref="document" in the <div> above
+    //  function for exportToPDF
+       printDocumentPDF() {
+				html2pdf(this.$refs.document, {
+					margin: 1,
+					filename: 'invoice.pdf',
+					image: { type: 'jpeg', quality: 0.99 },
+					html2canvas: { dpi: 200, letterRendering: true },
+					jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+				})
+			},
 
 
-    // added another Mutations inside
     ...mapMutations([
       "SET_CURRENT_INVOICE",
       "TOGGLE_EDIT_INVOICE",
@@ -230,7 +163,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .invoice-view {
   .nav-link {
     // display: flex is already call in the class declaration that is coming from app.vue style scss

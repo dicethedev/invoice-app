@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "preloader2",
+  name: "MyPreloader2",
   data() {
     return {
       show: true,
