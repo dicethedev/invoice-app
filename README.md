@@ -44,7 +44,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Create a Component folder in the src and inside the components folder I created a Navigation.vue file.
 
-## working with the responsive of 900px --- if is below 900px it will change to row on Navigation --- if is above 900px it will change on Navigation to columns and A message will popup on the screen
+## working with the responsive of 900px --- if is below 900px it will change to row on Navigation --- if is above 900px it will change on Navigation to columns and a red message will popup on the screen. (Mobile Devices)
 
 ## Displaying some information on the Home.vue
 ### 
